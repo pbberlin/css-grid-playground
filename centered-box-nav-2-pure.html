@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered box with nav - CSS grid playground 1</title>
+
+    <script type="text/javascript" src="dyn.js"> </script>
+
+<style type="text/css">
+
+    :root {
+		--nav-height:            3rem;
+        /* default height of body tag is zero */
+        /* subtraction of 1rem to prevent vertical scrollbar */
+		--body-height:           calc(100%  - var(--nav-height) - 1.5rem);
+		--body-height:           calc(100%                      - 1.5rem);
+		--nav-bar-position:      relative;                      /* fixed or relative */
+		--content-top:           0;                             /* fixed navbar => content-top = var(--nav-height); otherwise 0 */
+	}
+
+    /* inherited by all descendants */
+    :root, html, body {
+        height:   var(--body-height);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin:  0;
+        padding: 0;
+        border:  0;
+        outline: 0;
+        line-height: 1.15;
+        background-color: transparent;
+    }
+
+    label {
+        display: inline-block;
+        min-width:     7rem;
+        padding-right: 0.4rem;
+        text-align: right;
+    }
+
+    select {
+        border: 1px solid gainsboro;
+        font-size: 95%;
+
+        /* all it takes to preven long options from stretching the select */
+        max-width: 80px      ;
+
+    }
+
+
+    :focus {
+        outline: 2px solid greenyellow;
+    }
+
+
+    nav {
+
+        all: unset;
+        position:   var(--nav-bar-position);
+        z-index:    103;
+        width:      100%;
+        min-height: var(--nav-height);
+
+        background-color:     bisque;
+
+        display:               grid;
+
+        grid-auto-flow:        row;
+        grid-auto-flow:        column;
+
+        column-gap:            0.7rem;
+        row-gap:               5.2rem; /* ignored on grid-auto-flow: row*/
+        grid-auto-columns:     minmax(max-content, 31%);  /* width*/
+        grid-template-columns: 2fr 3fr 3fr 2fr;
+
+        justify-content:       space-between;
+        justify-items:         stretch;
+        align-content:         space-between;
+        align-items:           start;
+
+    }
+
+    nav div {
+        background-color: aqua;
+        margin:     0.2rem;
+        padding:    0.2rem;
+        font-size: 70%;
+    }
+
+    .grid-container {
+
+        margin:      2rem;
+        margin:      2rem auto;
+
+        width :  calc(100% - 4rem);
+        height:  calc(100% - 4rem);
+
+        background-color: lightblue;
+        border: 2px solid lightsalmon;
+
+
+        display: grid;
+
+        grid-auto-flow:        column;
+        grid-auto-rows:        minmax(120px, auto); /* min height 120px - unlimited height  -  conditional on align-content != stretch */
+        grid-template-rows:    repeat(auto-fill, minmax(120px, auto));
+
+
+        grid-auto-flow:        row;  /* default */
+        grid-auto-columns:     minmax(25%, 320px);  /* width*/
+        grid-template-columns: 200px 1fr 2fr min-content;
+        grid-template-columns: repeat(auto-fill, minmax(320px, auto));
+
+        column-gap:        1.0rem;
+        row-gap:           0.2rem; /* ignored on grid-auto-flow: row*/
+
+    }
+
+    .grid-container a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 0 0.6rem;
+    }
+
+    .item {
+        margin:  0;
+        padding: 0.5em;
+        background-color: aquamarine;
+        outline: 1px solid rosybrown;
+    }
+
+    .container-lvl-2 {
+
+        display: flex;
+        xx-max-height: 360px;
+
+        flex-direction: column;
+        flex-direction: row;
+
+        flex-wrap: wrap;
+
+        align-items: baseline;
+        align-items: center;
+    }
+
+    .container-radio {
+
+        display: flex;
+
+        flex-direction: column;
+        flex-direction: row;
+
+        margin: 0.2em;
+
+        justify-content: space-evenly;
+
+        align-items: center;
+
+        min-height: 5em;
+        max-width: 5.2em;
+
+        background-color: rgb(241, 251, 152);
+
+    }
+
+
+    .item-x-special {
+        background-color: rgb(146, 255, 127);
+
+        grid-column: 2 / 4;
+        grid-column-start: 2;
+        grid-column-end: 4;
+
+        grid-row: 2 / 4;
+        grid-row: span 2;
+    }
+
+</style>
+</head>
+
+<body onload="onBodyLoad();">
+
+    <nav>
+
+
+        <div style="xx-grid-column: 2 / 4">
+
+            <label for="ui01"></label>
+            <a id="ui01" href="" onclick="addItem();return false;" tabindex="0">add item</a>
+            <br>
+
+        </div>
+
+        <div style="xx-grid-column: 2 / 4">
+
+            <label for="ui02">grid-auto-flow</label>
+            <select id="ui02" name=""   onchange="createCSSClass(this,'grid-auto-flow')">
+                <option value="row"      >row</option>
+                <option value="column"   >column</option>
+                <option value="dense"    >dense</option>
+                <option value="dense row">dense row</option>
+                <option value="dense column">dense column</option>
+            </select>
+            <br>
+
+            <label for="ui03" title="no baseline">justify-content</label>
+            <select id="ui03" name=""  onchange="createCSSClass(this,'justify-content')">
+                <option value="stretch">stretch</option>
+                <option value="center">center</option>
+                <option value="start ">start</option>
+                <option value="end">end</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around" >space-around</option>
+                <option value="space-evenly" >space-evenly</option>
+            </select>
+            <br>
+
+            <label for="ui04">justify-items</label>
+            <select id="ui04" name=""  onchange="createCSSClass(this,'justify-items')">
+                <option value="stretch"     >stretch</option>
+                <option value="center"      >center</option>
+                <option value="start "      >start</option>
+                <option value="end"         >end</option>
+                <option value="left"        >left</option>
+                <option value="right"       >right</option>
+            </select>
+            <br>
+
+        </div>
+
+        <div style="">
+
+            <label for="ui05" title="HAS baseline">align-content</label>
+            <select id="ui05" name="" onchange="createCSSClass(this,'align-content')">
+                <option value="stretch">stretch</option>
+                <option value="center">center</option>
+                <option value="start ">start</option>
+                <option value="baseline ">baseline - only cross axis</option>
+                <option value="end">end</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+            </select>
+            <br>
+
+            <label for="ui04" title="HAS baseline">align-items</label>
+            <select id="ui04" name="" onchange="createCSSClass(this,'align-items')">
+                <option value="stretch">stretch</option>
+                <option value="center">center</option>
+                <option value="start ">start</option>
+                <option value="baseline ">baseline - only cross axis</option>
+                <option value="end">end</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+            </select>
+            <br>
+
+        </div>
+
+    </nav>
+
+    <div class="grid-container">
+    </div>
+
+</body>
+</html>

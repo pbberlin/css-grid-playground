@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered box - vertically centered content by classic - content wrapping </title>
+
+<style type="text/css">
+
+    /* inherited by all descendants */
+    :root, html, body {
+        margin:   0;
+        /* default height of body tag is zero */
+        /* subtraction of 1rem to prevent vertical scrollbar */
+        height:   calc(100% - 1rem); 
+
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin:  0;
+        padding: 0;
+        border:  0;
+        outline: 0;
+        line-height: 1.15;
+        background-color: transparent;
+    }
+
+
+
+    .grid-container {
+
+        margin:      2rem;
+        margin:      2rem auto;
+        
+        width :  calc(100% - 4rem);
+        height:  calc(100% - 4rem);
+
+        background-color: lightblue;
+        border: 2px solid lightsalmon;
+
+        display: grid;
+
+        grid-auto-flow: column;
+        grid-auto-flow: row;
+
+        grid-auto-rows:           minmax(6rem, auto); 
+        grid-auto-columns:        minmax(6rem, auto); /* min width on narrow screens */
+
+        /*  overrides auto-columns
+            effects *variable* number of columns depending on viewport width
+        */
+        grid-template-columns: repeat(auto-fill, minmax(6rem, max-content));
+        grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));          /* no item stretch if viewport larger than total widths */
+        grid-template-columns: repeat(auto-fit,  minmax(6rem, 1fr));          /*    item stretch if viewport larger than total widths */
+        grid-template-columns: repeat(auto-fit,  minmax(6rem, auto));
+
+        line-height: 1.5rem;
+
+    }
+
+
+    .btn {
+        border:        1px solid #77aaee;
+        border-bottom: 4px solid #77aaee;
+        color: #77aaee;
+        padding: .6rem 2rem;
+        margin:  .2rem;
+        text-decoration: none;
+    }
+
+</style>
+</head>
+
+<body>
+
+    <!-- 
+
+    <p style="margin: 2rem;">
+        https://stackoverflow.com/questions/53854838/how-can-i-force-this-css-grid-to-wrap-to-a-new-line-without-specifying-minmax-si
+        <br>
+        https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/
+
+    </p>
+
+
+    -->
+
+    <div class="grid-container">
+
+        <a class="btn" href="#">Button 1</a>
+        <a class="btn" href="#">Button 2</a>
+        <a class="btn" href="#">Button 3</a>
+        <a class="btn" href="#">Button 4</a>
+        <a class="btn" href="#">Button 5</a>
+        <a class="btn" href="#">Button 6</a>
+
+        <!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus officia dolor soluta corrupti eaque aperiam ex voluptatum enim vel quis optio, error cupiditate rerum obcaecati dignissimos omnis porro tenetur? Delectus repellat, possimus hic cupiditate, sapiente iusto enim natus dolores tempora nostrum illum ipsa commodi alias animi fuga deleniti provident, laudantium numquam quae! Maiores, repudiandae, tempora alias quaerat facere asperiores adipisci dolores, id nihil velit minus enim cum. Sint, velit! Nobis perferendis autem perspiciatis veniam, corrupti asperiores sapiente corporis ducimus consequuntur ipsum! Optio modi in natus illum corporis similique voluptatum iste? Corporis, iusto aperiam amet voluptatibus exercitationem iure hic non necessitatibus laudantium, harum reprehenderit quod nesciunt nulla pariatur dignissimos quisquam consequatur ratione suscipit neque mollitia quibusdam! Quam amet eius exercitationem ex ipsa vel impedit, nesciunt quod enim, nemo beatae. Tenetur natus, non reiciendis quasi inventore consectetur porro ullam alias hic quae aliquid quaerat repudiandae ipsa perspiciatis illo, vel voluptates ducimus, accusamus ex! A, nulla sed repellat ullam voluptatibus cupiditate culpa! Id, dolores sapiente. Nesciunt corrupti repellat molestias quasi laborum porro. Est et minus vel impedit magnam eligendi quis eius repudiandae officia error dolores eveniet nobis alias reprehenderit veritatis illo a, odio distinctio autem quas quam iusto voluptas doloremque. Excepturi harum voluptates, porro tempore magni eius commodi incidunt assumenda quo voluptatibus animi illum explicabo, tempora delectus totam corporis? Dolorum provident distinctio mollitia eos necessitatibus? -->
+    </div>
+
+</body>
+</html>
