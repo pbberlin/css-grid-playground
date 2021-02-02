@@ -10,19 +10,37 @@
 <style type="text/css">
 
     :root {
-		--nav-height:            3rem;
+		--nav-height:         5.6rem;  /* headline plus menu */
         /* default height of body tag is zero */
         /* subtraction of 1rem to prevent vertical scrollbar */
-		--body-height:           calc(100%  - var(--nav-height) - 1.5rem);
-		--body-height:           calc(100%                      - 1.5rem);
-		--nav-bar-position:      relative;                      /* fixed or relative */
-		--content-top:           0;                             /* fixed navbar => content-top = var(--nav-height); otherwise 0 */
+		--body-height:        calc(100%  - var(--nav-height) - 1.5rem);
+		--body-height:        calc(100%                      - 1.5rem);
+		--body-height:        calc(100%  - var(--nav-height) / 2  - 0.8rem);
+		--nav-bar-position:   relative;                      /* fixed or relative */
+        --content-top:        0;                             /* fixed navbar => content-top = var(--nav-height); otherwise 0 */
+
+        --clr-pri:            #42332a;
+
+        /* coolors.co/palettes/trending */
+        --clr-body-bg:        #f0efeb;
+
+        --clr-nav-bg:         #cb997e;
+        --clr-nav-mnu:        #fff1e6;
+
+        --clr-content-bg:     #eddcd2;
+        --clr-content-border: #ddbea9;
+
+        --clr-item-bg:        #a5a58d;
+        --clr-item-border:    #b7b7a4;
+
 	}
+
 
     /* inherited by all descendants */
     :root, html, body {
         height:   var(--body-height);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: var(--clr-body-bg);
     }
 
     * {
@@ -35,11 +53,40 @@
         background-color: transparent;
     }
 
+    a {
+        color: var(--clr-pri);
+        text-decoration: none;
+    }
+    a:link, a:visited {
+        color: var(--clr-pri);
+    }
+
+    a:hover {
+        box-shadow:
+            0 0 0 0.110em var(--clr-item-bg);
+    }
+
+    :focus {
+        outline: 2px solid var(--clr-item-bg);
+        box-shadow:
+            0 0 0 0.175em var(--clr-item-bg),
+            0 0 0 0.210em var(--clr-item-bg);
+    }
+
+
+
     label {
         display: inline-block;
-        min-width:     7rem;
-        padding-right: 0.4rem;
+        min-width:     5.2rem;
+        padding-right: 0.1  rem;
         text-align: right;
+        font-size: 90%;
+    }
+    label[for=ui122],
+    label[for=ui132],
+    dummy
+    {
+        min-width:     6.6rem;
     }
 
     select {
@@ -47,14 +94,11 @@
         font-size: 95%;
 
         /* all it takes to preven long options from stretching the select */
-        max-width: 80px      ;
-
+        min-width:   8.5rem;
+        max-width:   8.5rem;
     }
 
 
-    :focus {
-        outline: 2px solid greenyellow;
-    }
 
 
     nav {
@@ -65,30 +109,35 @@
         width:      100%;
         min-height: var(--nav-height);
 
-        background-color:     bisque;
+        background-color: var(--clr-nav-bg);
 
         display:               grid;
+        padding:               0.2rem 0;
 
-        grid-auto-flow:        row;
         grid-auto-flow:        column;
+        grid-auto-flow:        row;
 
         column-gap:            0.7rem;
-        row-gap:               5.2rem; /* ignored on grid-auto-flow: row*/
+        row-gap:               0.02rem; /* ignored on grid-auto-flow: row*/
         grid-auto-columns:     minmax(max-content, 31%);  /* width*/
-        grid-template-columns: 2fr 3fr 3fr 2fr;
+        grid-template-columns: 1fr minmax(28rem,  3fr) 2fr 2fr;
+        grid-template-rows:    1.4fr 2fr;
 
         justify-content:       space-between;
         justify-items:         stretch;
         align-content:         space-between;
         align-items:           start;
+        align-items:           stretch;
 
     }
 
     nav div {
-        background-color: aqua;
-        margin:     0.2rem;
-        padding:    0.2rem;
+        background-color: var(--clr-nav-mnu);
+        margin:     0.20rem 0.3rem;
+        padding:    0.05rem 0.2rem;
         font-size: 70%;
+
+        border-radius: 0.3rem;
     }
 
     .grid-container {
@@ -97,40 +146,75 @@
         margin:      2rem auto;
 
         width :  calc(100% - 4rem);
-        height:  calc(100% - 4rem);
+        min-height:  calc(100% - 4rem);
 
-        background-color: lightblue;
-        border: 2px solid lightsalmon;
+        background-color: var(--clr-content-bg);
+        border: 4px solid var(--clr-content-border);
 
 
         display: grid;
 
         grid-auto-flow:        column;
-        grid-auto-rows:        minmax(120px, auto); /* min height 120px - unlimited height  -  conditional on align-content != stretch */
+        grid-auto-rows:        minmax(120px, auto); /* min height 120px - unlimited height - conditional on align-content != stretch */
+        grid-auto-rows:        auto;                /*default*/
         grid-template-rows:    repeat(auto-fill, minmax(120px, auto));
+        grid-template-rows:    none;                /*default*/
 
 
-        grid-auto-flow:        row;  /* default */
-        grid-auto-columns:     minmax(25%, 320px);  /* width*/
-        grid-template-columns: 200px 1fr 2fr min-content;
+        grid-auto-flow:        row;                 /* default */
+        grid-auto-columns:     minmax(1fr, 320px);  /* width*/
+        grid-auto-columns:     auto;                /*default*/
         grid-template-columns: repeat(auto-fill, minmax(320px, auto));
+        grid-template-columns: none;                /*default*/
 
         column-gap:        1.0rem;
-        row-gap:           0.2rem; /* ignored on grid-auto-flow: row*/
+        row-gap:           0.8rem; /* ignored on grid-auto-flow: row*/
 
     }
 
     .grid-container a {
         display: inline-block;
-        text-decoration: none;
-        padding: 0 0.6rem;
+        padding: 0 0.01rem;
     }
 
     .item {
         margin:  0;
-        padding: 0.5em;
-        background-color: aquamarine;
-        outline: 1px solid rosybrown;
+        padding: 0.2em;
+        background-color:  var(--clr-item-bg);
+        outline: 4px solid var(--clr-item-border);
+
+        position: relative;  /* for item menu*/
+
+        xxborder-radius: 1.3rem;
+
+    }
+
+    .item .item-menu {
+        position: relative;
+        float: right;
+
+        right:  -0.2rem;
+        top:    -0.2rem;
+
+        background-color: var(--clr-item-border);
+        font-size:   65%;
+        line-height: 60%;
+
+        padding: 0.2rem;
+        border-bottom-left-radius: 0.3rem;
+
+
+    }
+
+    .item .extender {
+        display: inline-block;
+        background-color: var(--clr-item-border);
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 0.3rem;
+
+        min-width: 0.8rem;
+        font-size: 60%;
     }
 
     .container-lvl-2 {
@@ -179,6 +263,56 @@
         grid-row: span 2;
     }
 
+    @media only screen
+        /* and (min-device-width: 768px) */
+        and (max-device-width: 1024px)
+        and (-webkit-min-device-pixel-ratio: 1) {
+        /* CSS rules here */
+
+        label[for=ui14],
+        label[for=ui15],
+        label[for=ui16],
+        label[for=ui17],
+        dummy {
+            min-width:   4.2rem;
+            max-width:   4.2rem;
+        }
+
+        select {
+            min-width:   4.2rem;
+            max-width:   4.2rem;
+        }
+
+
+
+        nav {
+            grid-template-columns: 2.7fr 2.7fr 1.2fr;
+            grid-template-rows:    1.2fr 1.6fr 1.1fr;
+            column-gap:            0.1rem;           
+        }
+
+        nav div {
+            margin:     0.120rem 0.13rem;
+        }
+
+        nav div:nth-child(3),
+        dummy
+        {
+            grid-column: 1 / -1;
+        }
+
+        nav div:nth-child(2) {
+            order: 5;
+        }
+
+        .grid-container {
+            margin: 0.7rem auto;
+            width: calc(100% - 1.4rem);
+        }
+
+    }    
+
+
 </style>
 </head>
 
@@ -187,28 +321,107 @@
     <nav>
 
 
-        <div style="xx-grid-column: 2 / 4">
+        <div style="
+            grid-column:    1 / -1;
+            
+            align-self:     center;
+            justify-self:   stretch;
+            
+            vertical-align: baseline;
+            padding-bottom: 0.2rem;
+        "
+        
+        >
+            <span style='font-size:      240%;'>PBU´s CSS Grid Simulator</span>
+            <!-- <span style="display: inline-block; padding-left: 4rem;" >not suited for mobile; only desktop</span> -->
+            
+            
+        </div>
 
-            <label for="ui01"></label>
-            <a id="ui01" href="" onclick="addItem();return false;" tabindex="0">add item</a>
+        <div>
+
+            <label for="ui01a" style="min-width: 0;"></label>
+            + <a id="ui01a" href="" onclick="addItem(11);return false;" tabindex="0">11 items</a>
             <br>
+
+            <label for="ui01b" style="min-width: 0;"></label>
+            + &nbsp; <a id="ui01b" href="" onclick="addItem();return false;" tabindex="0">1 item</a>
+            <br>
+
 
         </div>
 
-        <div style="xx-grid-column: 2 / 4">
+        <div>
 
-            <label for="ui02">grid-auto-flow</label>
-            <select id="ui02" name=""   onchange="createCSSClass(this,'grid-auto-flow')">
-                <option value="row"      >row</option>
-                <option value="column"   >column</option>
-                <option value="dense"    >dense</option>
+            <!-- direction -->
+            <label for="ui11">grid-auto-flow</label>
+            <select id="ui11" name="" onchange="createCSSClass(this,'grid-auto-flow')">
+                <option value="row">row</option>
+                <option value="column">column</option>
+                <option value="dense">dense</option>
                 <option value="dense row">dense row</option>
                 <option value="dense column">dense column</option>
             </select>
             <br>
 
-            <label for="ui03" title="no baseline">justify-content</label>
-            <select id="ui03" name=""  onchange="createCSSClass(this,'justify-content')">
+
+            <!-- col -->
+            <label for="ui121">grid-auto-columns</label>
+            <select id="ui121" name=""   onchange="createCSSClass(this,'grid-auto-columns')">
+                <option value="auto">auto</option>
+                <!-- invalid <option value="minmax(1fr, 320px)"             >minmax(1fr, 320px)</option> -->
+                <!-- invalid <option value="minmax(max-content, content)"   >minmax(max-content, content)</option> -->
+                <!-- invalid <option value="minmax(min-content, content)"   >minmax(min-content, content)</option> -->
+                <option value="minmax(auto, 320px)"          >minmax(auto,        320px)</option>                
+                <option value="minmax(min-content, 320px)"   >minmax(min-content, 320px)</option>
+                <option value="minmax(320px, 1fr)"           >minmax(320px,        1fr ) -overflow </option>
+                <option value="minmax(320px, auto)"          >minmax(320px,        auto) -overflow </option>
+                <option value="minmax(max-content, 320px)"   >minmax(max-content, 320px) -overflow</option>
+
+            </select>
+
+            <label for="ui122">grid-template-columns</label>
+            <select id="ui122" name=""   onchange="createCSSClass(this,'grid-template-columns')">
+                <option value="none" >none (defaults to auto-cols)</option>
+                <option value="repeat(auto-fill, minmax(320px, auto))"  >repeat(auto-fill, minmax(320px, auto))</option>
+                <option value="200px 1fr 2fr min-content"               >200px 1fr 2fr min-content</option>
+                <option value="1fr 1fr"               >1fr 1fr</option>
+                <option value="1fr 1fr 1fr"           >1fr 1fr 1fr</option>
+                <option value="1fr 1fr 1fr 1fr"       >1fr 1fr 1fr 1fr</option>
+                <option value="1fr 1fr 1fr 1fr 1fr"   >1fr 1fr 1fr 1fr 1fr</option>
+            </select>
+            <br>
+
+
+            <!-- row -->
+            <label for="ui131">grid-auto-rows</label>
+            <select id="ui131" name="" onchange="createCSSClass(this,'grid-auto-rows')">
+                <option value="auto">auto</option>
+                <option value="minmax(120px, auto)">minmax(120px, auto)</option>
+                <option value="minmax(auto, 360px)">minmax(auto, 360px)</option>
+            </select>
+
+
+            <label for="ui132">grid-template-rows</label>
+            <select id="ui132" name=""   onchange="createCSSClass(this,'grid-template-rows')">
+                <option value="none" >none (defauts to auto-rows)</option>
+                <option value="repeat(auto-fill, minmax(120px, auto))"  >repeat(auto-fill, minmax(120px, auto))</option>
+                <option value="repeat(auto-fill, minmax(120px, 1f  ))"  >repeat(auto-fill, minmax(120px, 1fr ))</option>
+                <option value="1fr 1fr"               >1fr 1fr</option>
+                <option value="1fr 1fr 1fr"           >1fr 1fr 1fr</option>
+                <option value="1fr 1fr 1fr 1fr"       >1fr 1fr 1fr 1fr</option>
+                <option value="1fr 1fr 1fr 1fr 1fr"   >1fr 1fr 1fr 1fr 1fr</option>
+                <option value="1.5fr 0.5fr 1.5fr 0.5fr 1fr"   >1.5fr 0.5fr 1.5fr 0.5fr 1fr</option>
+            </select>
+            <br>
+
+        </div>
+
+        <div>
+
+
+            <label for="ui14" title="no baseline">justify-content</label>
+            <select id="ui14" name=""  onchange="createCSSClass(this,'justify-content')">
                 <option value="stretch">stretch</option>
                 <option value="center">center</option>
                 <option value="start ">start</option>
@@ -221,8 +434,8 @@
             </select>
             <br>
 
-            <label for="ui04">justify-items</label>
-            <select id="ui04" name=""  onchange="createCSSClass(this,'justify-items')">
+            <label for="ui15">justify-items</label>
+            <select id="ui15" name=""  onchange="createCSSClass(this,'justify-items')">
                 <option value="stretch"     >stretch</option>
                 <option value="center"      >center</option>
                 <option value="start "      >start</option>
@@ -234,10 +447,10 @@
 
         </div>
 
-        <div style="">
+        <div>
 
-            <label for="ui05" title="HAS baseline">align-content</label>
-            <select id="ui05" name="" onchange="createCSSClass(this,'align-content')">
+            <label for="ui16" title="HAS baseline">align-content</label>
+            <select id="ui16" name="" onchange="createCSSClass(this,'align-content')">
                 <option value="stretch">stretch</option>
                 <option value="center">center</option>
                 <option value="start ">start</option>
@@ -251,8 +464,8 @@
             </select>
             <br>
 
-            <label for="ui04" title="HAS baseline">align-items</label>
-            <select id="ui04" name="" onchange="createCSSClass(this,'align-items')">
+            <label for="ui17" title="HAS baseline">align-items</label>
+            <select id="ui17" name="" onchange="createCSSClass(this,'align-items')">
                 <option value="stretch">stretch</option>
                 <option value="center">center</option>
                 <option value="start ">start</option>
