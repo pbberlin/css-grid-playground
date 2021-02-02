@@ -10,7 +10,7 @@
 <style type="text/css">
 
     :root {
-		--nav-height:         5.6rem;  /* headline plus menu */
+		--nav-height:         6.6rem;  /* headline plus menu */
         /* default height of body tag is zero */
         /* subtraction of 1rem to prevent vertical scrollbar */
 		--body-height:        calc(100%  - var(--nav-height) - 1.5rem);
@@ -89,15 +89,23 @@
         min-width:     6.6rem;
     }
 
-    select {
+    select, input {
         border: 1px solid gainsboro;
         font-size: 95%;
-
-        /* all it takes to preven long options from stretching the select */
-        min-width:   8.5rem;
-        max-width:   8.5rem;
     }
 
+    select {
+        /* all it takes to preven long options from stretching the select */
+        /* min-width:   8.5rem; */
+        /* min-width:   8.5rem; */
+        width:   8.5rem;
+    }
+
+    input[id=uiGTB5],
+    dummy
+    {
+        width: 28rem;
+    }
 
 
 
@@ -121,7 +129,7 @@
         row-gap:               0.02rem; /* ignored on grid-auto-flow: row*/
         grid-auto-columns:     minmax(max-content, 31%);  /* width*/
         grid-template-columns: 1fr minmax(28rem,  3fr) 2fr 2fr;
-        grid-template-rows:    1.4fr 2fr;
+        grid-template-rows:    1.4fr 0.8fr 2fr;
 
         justify-content:       space-between;
         justify-items:         stretch;
@@ -135,6 +143,8 @@
         background-color: var(--clr-nav-mnu);
         margin:     0.20rem 0.3rem;
         padding:    0.05rem 0.2rem;
+        padding-top:    0.15rem;
+        padding-bottom: 0.01rem;
         font-size: 70%;
 
         border-radius: 0.3rem;
@@ -155,17 +165,13 @@
         display: grid;
 
         grid-auto-flow:        column;
-        grid-auto-rows:        minmax(120px, auto); /* min height 120px - unlimited height - conditional on align-content != stretch */
-        grid-auto-rows:        auto;                /*default*/
-        grid-template-rows:    repeat(auto-fill, minmax(120px, auto));
-        grid-template-rows:    none;                /*default*/
+        grid-auto-rows:        auto;                /* default -    minmax(100px, auto)*/
+        grid-template-rows:    none;                /* default -    repeat(auto-fill, minmax(100px, auto));*/
 
 
-        grid-auto-flow:        row;                 /* default */
-        grid-auto-columns:     minmax(1fr, 320px);  /* width*/
-        grid-auto-columns:     auto;                /*default*/
-        grid-template-columns: repeat(auto-fill, minmax(320px, auto));
-        grid-template-columns: none;                /*default*/
+        grid-auto-flow:        row;                 /* default -        */
+        grid-auto-columns:     auto;                /* default -    minmax(1fr, 300px) would be invalid */  
+        grid-template-columns: none;                /* default -    repeat(auto-fill, minmax(300px, auto));*/
 
         column-gap:        1.0rem;
         row-gap:           0.8rem; /* ignored on grid-auto-flow: row*/
@@ -184,9 +190,6 @@
         outline: 4px solid var(--clr-item-border);
 
         position: relative;  /* for item menu*/
-
-        xxborder-radius: 1.3rem;
-
     }
 
     .item .item-menu {
@@ -220,7 +223,9 @@
     .container-lvl-2 {
 
         display: flex;
-        xx-max-height: 360px;
+        /*
+        max-height: 360px;
+        */
 
         flex-direction: column;
         flex-direction: row;
@@ -279,30 +284,39 @@
         }
 
         select {
-            min-width:   4.2rem;
-            max-width:   4.2rem;
+            /* min-width:   4.2rem; */
+            /* max-width:   4.2rem; */
+            width:   4.2rem;
         }
+
+        input[id=uiGTB5],
+        dummy
+        {
+            width: 18rem;
+            letter-spacing: -0.04rem;
+        }
+
 
 
 
         nav {
             grid-template-columns: 2.7fr 2.7fr 1.2fr;
-            grid-template-rows:    1.2fr 1.6fr 1.1fr;
-            column-gap:            0.1rem;           
+            grid-template-rows:    1.2fr 1.2fr 1.7fr 1.2fr;
+            column-gap:            0.1rem;
         }
 
         nav div {
             margin:     0.120rem 0.13rem;
         }
 
-        nav div:nth-child(3),
+        nav div:nth-child(4),
         dummy
         {
             grid-column: 1 / -1;
         }
 
-        nav div:nth-child(2) {
-            order: 5;
+        nav div:nth-child(3) {
+            order: 6;
         }
 
         .grid-container {
@@ -310,7 +324,7 @@
             width: calc(100% - 1.4rem);
         }
 
-    }    
+    }
 
 
 </style>
@@ -323,43 +337,131 @@
 
         <div style="
             grid-column:    1 / -1;
-            
             align-self:     center;
             justify-self:   stretch;
-            
             vertical-align: baseline;
             padding-bottom: 0.2rem;
         "
-        
         >
             <span style='font-size:      240%;'>PBU´s CSS Grid Simulator</span>
             <!-- <span style="display: inline-block; padding-left: 4rem;" >not suited for mobile; only desktop</span> -->
-            
-            
         </div>
 
-        <div>
+        <!-- builder -->
+        <div style="
+            grid-column:    1 / -1;
+            align-self:     center;
+            justify-self:   stretch;
+            vertical-align: baseline;
+            padding-bottom: 0.2rem;
+        "        
+        >
 
+            <!-- grid template builder -->
+            <label for="uiGTB1" style="min-width: 1.8rem;"><b>Grid-Tpl-Builder</b>  </label>
+            
+            <select id="uiGTB1" name="" style="width: 4.4rem;" title="repeat">
+                <option value="">no repeat</option>
+                <option value="repeat( auto-fill, ">repeat( auto-fill, </option>
+                <option value="repeat( auto-fit , ">repeat( auto-fit , </option>
+                <option value="repeat(        2 , ">repeat( 2 ,        </option>
+                <option value="repeat(        3 , ">repeat( 3 ,        </option>
+                <option value="repeat(        4 , ">repeat( 4 ,        </option>
+            </select>
+            <label for="uiGTB2" style="min-width: 1.2rem;">min</label>
+            <select id="uiGTB2" name="" style="width: 3.2rem;" title="min argument">
+                <option value="200px" >200px </option>
+                <option value="auto" title="As max arg: max-content. As a min arg: largest min-[width|height] in track">auto</option>
+                <option value="min-content" title="stackoverflow.com/questions/51285308">min-content</option>
+                <option value="max-content" title="stackoverflow.com/questions/51285308">max-content</option>
+                <option value="fit-content(40%)" title="minmax(auto, max-content) clamped at 40%">fit-content(40%)</option>
+                <option value=" 50px" > 50px </option>
+                <option value="100px" >100px </option>
+                <option value="200px" >200px </option>
+                <option value="300px" >300px </option>
+                <option value="0.25fr">0.25fr</option>
+                <option value="0.5fr ">0.50fr</option>
+                <option value="0.75fr">0.75fr</option>
+                <option value="1fr"   >1.00fr</option>
+                <option value="1.5fr" >1.50fr</option>
+                <option value="2fr"   >2.00fr</option>
+                <option value="3fr"   >3.00fr</option>
+            </select>
+            <label for="uiGTB3" style="min-width: 1.2rem;">max</label>
+            <select id="uiGTB3" name="" style="width: 3.2rem;" title="max argument">
+                <option value="1fr"   >1.00fr</option>
+                <option value="auto" title="As max arg: max-content. As a min arg: largest min-[width|height] in track">auto</option>
+                <option value="min-content" title="stackoverflow.com/questions/51285308">min-content</option>
+                <option value="max-content" title="stackoverflow.com/questions/51285308">max-content</option>
+                <option value="fit-content(40%)" title="minmax(auto, max-content) clamped at 40%">fit-content(40%)</option>
+                <option value=" 50px" > 50px </option>
+                <option value="100px" >100px </option>
+                <option value="200px" >200px </option>
+                <option value="300px" >300px </option>
+                <option value="0.25fr">0.25fr</option>
+                <option value="0.5fr ">0.50fr</option>
+                <option value="0.75fr">0.75fr</option>
+                <option value="1fr"   >1.00fr</option>
+                <option value="1.5fr" >1.50fr</option>
+                <option value="2fr"   >2.00fr</option>
+                <option value="3fr"   >3.00fr</option>
+            </select>
+
+
+            <a id="uiGTB4" href="" onclick="addGridTemplateBuilderArg(this,'xx'); return false;" 
+                title="add argument"
+                style="font-size: 110%;"
+            > 
+                &nbsp; &#10133; &nbsp;
+            </a>
+            
+            <!-- no wider than 22rem for mobile -->
+            <input  id="uiGTB5" name="" value=""  maxlength="200" 
+                style="resize: both; overflow: auto;"
+            >
+
+            <a id="uiGTB4" href="" onclick="createCSSClass(document.getElementById('uiGTB5'),'grid-template-columns'); return false;"
+                title="-> grid column template"            
+            >
+                &nbsp; <b>C</b> &nbsp;
+            </a>
+
+            <a id="uiGTB5" href="" onclick="createCSSClass(document.getElementById('uiGTB5'),'grid-template-rows')   ; return false;"
+                title="-> row column template"            
+            >
+                &nbsp; <b>R</b> &nbsp;
+            </a>
+
+            <a id="uiGTB6" href="" onclick="document.getElementById('uiGTB5').value=''; return false;">
+                &nbsp; <b>x</b> &nbsp;
+            </a>
+            <br>
+
+        </div>
+
+
+        <div>
+        
             <label for="ui01a" style="min-width: 0;"></label>
             + <a id="ui01a" href="" onclick="addItem(11);return false;" tabindex="0">11 items</a>
             <br>
-
+        
             <label for="ui01b" style="min-width: 0;"></label>
             + &nbsp; <a id="ui01b" href="" onclick="addItem();return false;" tabindex="0">1 item</a>
             <br>
-
-
+        
         </div>
+
 
         <div>
 
             <!-- direction -->
             <label for="ui11">grid-auto-flow</label>
             <select id="ui11" name="" onchange="createCSSClass(this,'grid-auto-flow')">
-                <option value="row">row</option>
-                <option value="column">column</option>
-                <option value="dense">dense</option>
-                <option value="dense row">dense row</option>
+                <option value="row"         >row</option>
+                <option value="column"      >column</option>
+                <option value="dense"       >dense</option>
+                <option value="dense row"   >dense row</option>
                 <option value="dense column">dense column</option>
             </select>
             <br>
@@ -367,23 +469,27 @@
 
             <!-- col -->
             <label for="ui121">grid-auto-columns</label>
-            <select id="ui121" name=""   onchange="createCSSClass(this,'grid-auto-columns')">
+            <select id="ui121" name=""   onchange="createCSSClass(this,'grid-auto-columns')"
+                title="if no column template is specified"
+            >
                 <option value="auto">auto</option>
-                <!-- invalid <option value="minmax(1fr, 320px)"             >minmax(1fr, 320px)</option> -->
+                <!-- invalid <option value="minmax(1fr, 300px)"             >minmax(1fr, 300px)</option> -->
                 <!-- invalid <option value="minmax(max-content, content)"   >minmax(max-content, content)</option> -->
                 <!-- invalid <option value="minmax(min-content, content)"   >minmax(min-content, content)</option> -->
-                <option value="minmax(auto, 320px)"          >minmax(auto,        320px)</option>                
-                <option value="minmax(min-content, 320px)"   >minmax(min-content, 320px)</option>
-                <option value="minmax(320px, 1fr)"           >minmax(320px,        1fr ) -overflow </option>
-                <option value="minmax(320px, auto)"          >minmax(320px,        auto) -overflow </option>
-                <option value="minmax(max-content, 320px)"   >minmax(max-content, 320px) -overflow</option>
+                <option value="minmax(auto, 300px)"          >minmax(auto,        300px)</option>
+                <option value="minmax(min-content, 300px)"   >minmax(min-content, 300px)</option>
+                <option value="minmax(300px, 1fr)"           >minmax(300px,        1fr ) -overflow </option>
+                <option value="minmax(300px, auto)"          >minmax(300px,        auto) -overflow </option>
+                <option value="minmax(max-content, 300px)"   >minmax(max-content, 300px) -overflow</option>
 
             </select>
 
             <label for="ui122">grid-template-columns</label>
-            <select id="ui122" name=""   onchange="createCSSClass(this,'grid-template-columns')">
+            <select id="ui122" name=""   onchange="createCSSClass(this,'grid-template-columns')"
+                title="pre-configured values for column template"
+            >
                 <option value="none" >none (defaults to auto-cols)</option>
-                <option value="repeat(auto-fill, minmax(320px, auto))"  >repeat(auto-fill, minmax(320px, auto))</option>
+                <option value="repeat(auto-fill, minmax(300px, auto))"  >repeat(auto-fill, minmax(300px, auto))</option>
                 <option value="200px 1fr 2fr min-content"               >200px 1fr 2fr min-content</option>
                 <option value="1fr 1fr"               >1fr 1fr</option>
                 <option value="1fr 1fr 1fr"           >1fr 1fr 1fr</option>
@@ -395,18 +501,22 @@
 
             <!-- row -->
             <label for="ui131">grid-auto-rows</label>
-            <select id="ui131" name="" onchange="createCSSClass(this,'grid-auto-rows')">
+            <select id="ui131" name="" onchange="createCSSClass(this,'grid-auto-rows')"
+                title="if no row template is specified"
+            >
                 <option value="auto">auto</option>
-                <option value="minmax(120px, auto)">minmax(120px, auto)</option>
+                <option value="minmax(100px, auto)">minmax(100px, auto)</option>
                 <option value="minmax(auto, 360px)">minmax(auto, 360px)</option>
             </select>
 
 
             <label for="ui132">grid-template-rows</label>
-            <select id="ui132" name=""   onchange="createCSSClass(this,'grid-template-rows')">
+            <select id="ui132" name=""   onchange="createCSSClass(this,'grid-template-rows')"
+                title="pre-configured values for row template"
+            >
                 <option value="none" >none (defauts to auto-rows)</option>
-                <option value="repeat(auto-fill, minmax(120px, auto))"  >repeat(auto-fill, minmax(120px, auto))</option>
-                <option value="repeat(auto-fill, minmax(120px, 1f  ))"  >repeat(auto-fill, minmax(120px, 1fr ))</option>
+                <option value="repeat(auto-fill, minmax(100px, auto))"  >repeat(auto-fill, minmax(100px, auto))</option>
+                <option value="repeat(auto-fill, minmax(100px, 1f  ))"  >repeat(auto-fill, minmax(100px, 1fr ))</option>
                 <option value="1fr 1fr"               >1fr 1fr</option>
                 <option value="1fr 1fr 1fr"           >1fr 1fr 1fr</option>
                 <option value="1fr 1fr 1fr 1fr"       >1fr 1fr 1fr 1fr</option>

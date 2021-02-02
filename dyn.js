@@ -89,6 +89,37 @@ function addItem(delta) {
 }
 
 
+
+function addGridTemplateBuilderArg(srcA, argB) {
+    var i1 = document.getElementById("uiGTB1").value;
+    var i2 = document.getElementById("uiGTB2").value;
+    var i3 = document.getElementById("uiGTB3").value;
+    var o  = document.getElementById("uiGTB5");
+
+    if (i2 != i3) {
+        if (i2.substring(i2.length-2,i2.length) == "fr") {
+            alert("first argument of minmax cannot be 'fr'");
+            return;
+        }
+    }
+
+    if (i1 == "") {
+
+        if (i2 == i3) {
+            o.value +=                      `${i3}  `;
+        } else {
+            o.value +=       `minmax(${i2}, ${i3})  `;
+        }
+
+    } else {
+        o.value += `${i1} minmax(${i2}, ${i3})  )`;
+    }
+
+    console.log("grid template arg added", o);
+
+}
+
+
 /* incrementing an argument to CSS 'grid-[row,column]-end'
     'span 2' becomes 'span 3' ...
 */
@@ -120,7 +151,7 @@ function incRowColSpan(srcA,rowCol) {
         par.style["grid-column-end"] = incSpan(par.style["grid-column-end"]);
     }
 }
-/* 
+/*
     prop is either width or height
 */
 function extend(srcA, prop) {
@@ -136,7 +167,7 @@ function extend(srcA, prop) {
         srcA.style[prop] = `${prevInt}rem`;
     }
     console.log("extended  ", srcA.style[prop]);
-    
+
 }
 
 
@@ -162,9 +193,9 @@ var dynStyleEl       = document.createElement('style');
 dynStyleEl.innerHTML = "";
 
 
-/* 
+/*
     addReplaceCSSClass is based on a dynamically created <style> element;
-    it contains one-liner CSS classes - one for each 
+    it contains one-liner CSS classes - one for each
     CSS grid property;
     on update, the innerHTML is parsed line by line,
     and the new class is inserted/replaced.
